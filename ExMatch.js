@@ -229,7 +229,7 @@ _.extend(ExMatch.prototype, {
 				
 				if(keepTheStrings.length > 0) {
 					var newObj = {}
-					var newExp = _.isArray(this.searchFields[key]) ? '$in' : '$or';
+					var newExp = _.isArray(_.get(this.searchFields, key)) ? '$in' : '$or';
 					newObj[newExp] = {};
 					newObj[newExp][key] = keepTheStrings;
 					if(this.debug) {
@@ -542,9 +542,9 @@ _.extend(ExMatch.prototype, {
 			
 		} else {
 			
-			if (this.searchFields[key] === undefined) {
+			if (_.get(this.searchFields, key) === undefined) {
 				if(this.debug || this.debugComparison) {
-					console.info(this._current.exp.toUpperCase() + ' SKIPPED COMPARE: searchFields['+key+'] = ', this.searchFields[key], val, key);
+					console.info(this._current.exp.toUpperCase() + ' SKIPPED COMPARE: searchFields['+key+'] = ', _.get(this.searchFields, key), val, key);
 				}
 				
 				return false;
@@ -560,20 +560,20 @@ _.extend(ExMatch.prototype, {
 					console.log(this._current.exp + ' custom comparer used');
 				}
 				//var matches = ensureArray(val);
-				var ret = this._current.$comparer.call(this, this.searchFields[key], val);
+				var ret = this._current.$comparer.call(this, _.get(this.searchFields, key), val);
 			
 			} else {
 				/* we want an Array of objects */	
 				var matches = ensureArray(val);
 				if(this.debug) {
-					//console.log('check for matches:', matches, 'in', this.searchFields[key]);
+					//console.log('check for matches:', matches, 'in', _.get(this.searchFields, key));
 				}
 				/* does the matches array have any true outcomes */
-				var ret = _.includes(matches, this.searchFields[key]);
+				var ret = _.includes(matches, _.get(this.searchFields, key));
 			}
 			
 			if(this.debug || this.debugComparison) {
-				console.log(this._current.exp.toUpperCase() + ' COMPARED: ' + ret.toString().toUpperCase(), ' compared ' + val, ' with ',  this.searchFields[key], ' from ',  key);
+				console.log(this._current.exp.toUpperCase() + ' COMPARED: ' + ret.toString().toUpperCase(), ' compared ' + val, ' with ',  _.get(this.searchFields, key), ' from ',  key);
 			}
 			return ret;
 		}	

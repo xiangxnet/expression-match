@@ -1,12 +1,12 @@
 {
   "name": "expression-match",
-  "version": "0.0.17-alpha.1",
+  "version": "0.0.17",
   "private": false,
   "description": "expression comparison",
   "main": "./ExMatch.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/inquisive/expression-match"
+    "url": "https://github.com/xiangxnet/expression-match"
   },
   "dependencies": {
     "lodash": "4.16.5"
